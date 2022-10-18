@@ -15,9 +15,9 @@ public class World {
         for (Direction move : moves) {
             switch (move) {
                 case f -> System.out.println("Zwierzak idzie do przodu");
-                case b -> System.out.println("Zwierzak idzie do tyłu");
-                case r -> System.out.println("Zwierzak skręca w prawo");
-                case l -> System.out.println("Zwierzak skręca w lewo");
+                case b -> System.out.println("Zwierzak idzie do tylu");
+                case r -> System.out.println("Zwierzak skreca w prawo");
+                case l -> System.out.println("Zwierzak skreca w lewo");
                 default -> {
                 }
             }
@@ -42,8 +42,19 @@ public class World {
 
     public static void main(String[] args) {
         Direction[] moves = convert(args);
-        System.out.println("system wystartował");
+        System.out.println("system wystartowal");
         run(moves);
-        System.out.print("system zakończył działanie");
+        System.out.println("system zakonczyl dzialanie");
+
+        Vector2d position1 = new Vector2d(1,2);
+        System.out.println(position1);
+        Vector2d position2 = new Vector2d(-2,1);
+        System.out.println(position2);
+        System.out.println(position1.add(position2));
+
+        System.out.println(MapDirection.NORTH);
+        System.out.println(MapDirection.NORTH.next());
+        System.out.println(MapDirection.SOUTH.previous());
+        System.out.println(MapDirection.WEST.toUnitVector());
     }
 }
