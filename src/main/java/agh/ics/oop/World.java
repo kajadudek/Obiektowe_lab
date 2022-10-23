@@ -57,7 +57,7 @@ public class World {
         System.out.println(animal);
         System.out.println(animal.getPosition());
 
-        MoveDirection[] result = OptionsParser.parse(args); //statyczna metoda, da się tez tworząc nowy obiekt
+        MoveDirection[] result = OptionsParser.parse(args);
         for (MoveDirection move : result) {
             animal.move(move);
         }

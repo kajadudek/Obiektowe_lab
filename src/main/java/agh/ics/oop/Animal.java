@@ -21,6 +21,24 @@ public class Animal {
         return position;
     }
 
+    public MapDirection getOrientation() {
+        return orientation;
+    }
+
+    public void isOutOfField() {
+        if (position.x >= 5) {
+            position.x = 4;
+        }
+        if (position.y >= 5) {
+            position.y = 4;
+        }
+        if (position.x <= -5) {
+            position.x = -4;
+        }
+        if (position.y <= -5) {
+            position.y = -4;
+        }
+    }
     public void move(MoveDirection direction){
         switch (direction) {
             case LEFT -> orientation = orientation.previous();
@@ -42,18 +60,6 @@ public class Animal {
                 }
             }
         }
-
-        if (position.x >= 5) {
-            position.x = 4;
-        }
-        if (position.y >= 5) {
-            position.y = 4;
-        }
-        if (position.x <= -5) {
-            position.x = -4;
-        }
-        if (position.y <= -5) {
-            position.y = -4;
-        }
+        isOutOfField();
     }
 }
