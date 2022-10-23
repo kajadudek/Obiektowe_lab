@@ -42,7 +42,7 @@ class Vector2dTest {
         Vector2d v1 = new Vector2d(3,1);
         Vector2d v2 = new Vector2d(2,3);
         Vector2d v3 = new Vector2d(3,3);
-        assertEquals(v1.upperRight(v2), v3);
+        assertEquals(v1.upperRight(v2), new Vector2d(3,3));
     }
 
     @Test

@@ -3,8 +3,8 @@ package agh.ics.oop;
 import java.util.Objects;
 
 public class Vector2d {
-    public final int x;
-    public final int y;
+    public int x;
+    public int y;
 
     public Vector2d (int x, int y) {
         this.x = x;
@@ -83,6 +83,6 @@ public class Vector2d {
         return Objects.hash(this.x,this.y);
     }
 
-//    equals - metoda uzywana to hashCode, Objects - klasa statyczna, w ktorej jest metoda hashCode(s) (przyjmuje parametry w postaci obiektu)
+//    equals - metoda uzywana to hashCode, Objects - klasa statyczna, w ktorej jest metoda hashCode() (przyjmuje parametry w postaci obiektu)
 
 }
