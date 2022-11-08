@@ -1,14 +1,36 @@
 package agh.ics.oop;
 
 public class Animal {
-    private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(2,2);
+    private MapDirection orientation;
+    private Vector2d position;
+    private IWorldMap map;
+
+    Animal() {
+        orientation = MapDirection.NORTH;
+    }
+
+    Animal(IWorldMap map, Vector2d initialPosition) {
+        this.map = map;
+        position = initialPosition;
+        orientation = MapDirection.NORTH;
+    }
+
+    Animal(IWorldMap map) {
+        this.map = map;
+        orientation = MapDirection.NORTH;
+    }
 
     @Override
     public String toString() {
-        return "(" + position.x + ", " + position.y + ") " + orientation;
-//        String.valueOf(position.x) + String.valueOf(position.y) + String.valueOf(orientation);
+        return switch (orientation) {
+            case NORTH -> "N";
+            case SOUTH -> "S";
+            case WEST -> "W";
+            case EAST -> "E";
+            case OTHER -> null;
+        };
     }
+
 
     boolean isAt(Vector2d position) {
         if (position.equals(this.position)) {
@@ -17,7 +39,7 @@ public class Animal {
         return false;
     }
 
-    public Vector2d getPosition(){
+    public Vector2d getPosition() {
         return position;
     }
 
@@ -25,41 +47,23 @@ public class Animal {
         return orientation;
     }
 
-    public void isOutOfField() {
-        if (position.x >= 5) {
-            position.x = 4;
-        }
-        if (position.y >= 5) {
-            position.y = 4;
-        }
-        if (position.x <= -5) {
-            position.x = -4;
-        }
-        if (position.y <= -5) {
-            position.y = -4;
-        }
-    }
     public void move(MoveDirection direction){
+        Vector2d newVector = new Vector2d(0,0);
         switch (direction) {
-            case LEFT -> orientation = orientation.previous();
-            case RIGHT -> orientation = orientation.next();
-            case FORWARD -> {
-                switch (orientation) {
-                    case NORTH -> position.y += 1; //FINAL??
-                    case SOUTH -> position.y -= 1;
-                    case EAST -> position.x += 1;
-                    case WEST -> position.x -= 1;
-                }
+            case RIGHT -> {
+                this.orientation = this.orientation.next();
+                return;
             }
-            case BACKWARD -> {
-                switch (orientation){
-                    case NORTH -> position.y -= 1;
-                    case SOUTH -> position.y += 1;
-                    case EAST -> position.x -= 1;
-                    case WEST -> position.x += 1;
-                }
+            case LEFT -> {
+                this.orientation = this.orientation.previous();
+                return;
             }
+            case FORWARD -> newVector = this.position.add(this.orientation.toUnitVector());
+            case BACKWARD -> newVector = this.position.subtract(this.orientation.toUnitVector());
+            case OTHER -> newVector = this.position;
         }
-        isOutOfField();
+        if(map.canMoveTo(newVector)){
+            this.position = newVector;
+        }
     }
 }

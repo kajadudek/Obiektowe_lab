@@ -41,26 +41,11 @@ public class World {
     }
 
     public static void main(String[] args) {
-//        Direction[] moves = convert(args);
-//        System.out.println("system wystartowal");
-//        run(moves);
-//        System.out.println("system zakonczyl dzialanie");
-//
-//        Vector2d position1 = new Vector2d(1,2);
-//        System.out.println(position1);
-//        Vector2d position2 = new Vector2d(-2,1);
-//        System.out.println(position2);
-//        System.out.println(position1.add(position2));
-
-
-        Animal animal = new Animal();
-        System.out.println(animal);
-        System.out.println(animal.getPosition());
-
-        MoveDirection[] result = OptionsParser.parse(args);
-        for (MoveDirection move : result) {
-            animal.move(move);
-        }
-        System.out.println(animal);
+        MoveDirection[] directions = new OptionsParser().parse(args);
+        IWorldMap map = new RectangularMap(10, 5);
+        Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
+        IEngine engine = new SimulationEngine(directions, map, positions);
+        engine.run();
+        System.out.println(map);
     }
 }
