@@ -62,8 +62,9 @@ public class Animal {
             case BACKWARD -> newVector = this.position.subtract(this.orientation.toUnitVector());
             case OTHER -> newVector = this.position;
         }
-        if(map.canMoveTo(newVector)){
+        if(map.canMoveTo(newVector)) {
             this.position = newVector;
         }
+//        System.out.println(map);
     }
 }

@@ -10,16 +10,15 @@ public class SimulationEngine implements IEngine{
 
     public SimulationEngine(MoveDirection[] moves, IWorldMap map, Vector2d[] animalsPositions) {
         for (int i = 0; i < animalsPositions.length; i++) {
-            if (!map.isOccupied(animalsPositions[i])) {
-                Animal animal = new Animal(map, animalsPositions[i]);
-                map.place(animal);
+            Animal animal = new Animal(map, animalsPositions[i]);
+            if (map.place(animal)) {
                 this.animals.add(animal);
             }
         }
 
         this.moves = moves;
+        System.out.println(map);
     }
-
 
     @Override
     public void run() {
