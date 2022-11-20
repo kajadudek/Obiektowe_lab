@@ -57,7 +57,7 @@ public class Animal {
     }
 
     public void move(MoveDirection direction){
-        Vector2d newVector = new Vector2d(0,0);
+        Vector2d newVector = new Vector2d(-1,-1);
         switch (direction) {
             case RIGHT -> this.orientation = this.orientation.next();
             case LEFT -> this.orientation = this.orientation.previous();
@@ -67,7 +67,6 @@ public class Animal {
         }
 
         if(map.canMoveTo(newVector)) {
-            System.out.println(this.position + "--->" + newVector);
             this.position = newVector;
             positionChanged(this.position, newVector);
         }

@@ -31,7 +31,6 @@ public class GrassField extends AbstractWorldMap {
         if(animals.containsKey(position)){
             return false;
         }
-
         if (position.precedes(new Vector2d(0, 0))) {
 
             if (isOccupied(position)) {

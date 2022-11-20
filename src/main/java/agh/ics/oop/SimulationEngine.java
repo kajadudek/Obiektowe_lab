@@ -23,7 +23,6 @@ public class SimulationEngine implements IEngine{
     @Override
     public void run() {
         for(int i = 0; i < moves.length; i++){
-            System.out.println(moves[i] + " " + animals.get(0).getPosition() + animals.get(1).getPosition());
             animals.get(i % animals.size()).move(moves[i]);
         }
     }
