@@ -4,30 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animal {
+
     private MapDirection orientation;
     private Vector2d position;
     private IWorldMap map;
-    private final List<IPositionChangeObserver> Observers;
+    private final List<IPositionChangeObserver> observers;
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
         this.map = map;
-        position = initialPosition;
-        orientation = MapDirection.NORTH;
-        this.Observers = new ArrayList<>();
-    }
-
-    void addObserver(IPositionChangeObserver observer){
-        this.Observers.add(observer);
-    }
-
-    void removeObserver(IPositionChangeObserver observer){
-        this.Observers.remove(observer);
-    }
-
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-        for(IPositionChangeObserver observe: Observers){
-            observe.positionChanged(oldPosition,newPosition);
-        }
+        this.position = initialPosition;
+        this.orientation = MapDirection.NORTH;
+        this.observers = new ArrayList<>();
+        addObserver((IPositionChangeObserver) map);
     }
 
     @Override
@@ -46,6 +34,20 @@ public class Animal {
             return true;
         }
         return false;
+    }
+
+    void addObserver(IPositionChangeObserver observer){
+        this.observers.add(observer);
+    }
+
+    void removeObserver(IPositionChangeObserver observer){
+        this.observers.remove(observer);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        for(IPositionChangeObserver observe: observers){
+            observe.positionChanged(oldPosition,newPosition);
+        }
     }
 
     public Vector2d getPosition() {
@@ -67,8 +69,8 @@ public class Animal {
         }
 
         if(map.canMoveTo(newVector)) {
-            this.position = newVector;
             positionChanged(this.position, newVector);
+            this.position = newVector;
         }
         System.out.println(map);
     }
