@@ -1,7 +1,7 @@
 package agh.ics.oop;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RectangularMap extends AbstractWorldMap {
     private final int width;
@@ -11,6 +11,13 @@ public class RectangularMap extends AbstractWorldMap {
         this.width = width;
         this.height = height;
     }
+//    @Override
+//    public String toString(){
+//        Vector2d start = new Vector2d(0,0);
+//        Vector2d end = new Vector2d(width +1,height+1);
+//        MapVisualizer mapVisualizer = new MapVisualizer(this);
+//        return mapVisualizer.draw(start, end);
+//    }
     public int getWidth() {
         return this.width;
     }
@@ -18,7 +25,7 @@ public class RectangularMap extends AbstractWorldMap {
         return this.height;
     }
 
-    public List<Animal> getAnimals(){
+    public Map getAnimals(){
         return this.animals;
     }
 

@@ -1,23 +1,33 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Animal {
     private MapDirection orientation;
     private Vector2d position;
     private IWorldMap map;
+    private final List<IPositionChangeObserver> Observers;
 
-    Animal() {
-        orientation = MapDirection.NORTH;
-    }
-
-    Animal(IWorldMap map, Vector2d initialPosition) {
+    public Animal(IWorldMap map, Vector2d initialPosition) {
         this.map = map;
         position = initialPosition;
         orientation = MapDirection.NORTH;
+        this.Observers = new ArrayList<>();
     }
 
-    Animal(IWorldMap map) {
-        this.map = map;
-        orientation = MapDirection.NORTH;
+    void addObserver(IPositionChangeObserver observer){
+        this.Observers.add(observer);
+    }
+
+    void removeObserver(IPositionChangeObserver observer){
+        this.Observers.remove(observer);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        for(IPositionChangeObserver observe: Observers){
+            observe.positionChanged(oldPosition,newPosition);
+        }
     }
 
     @Override
@@ -30,7 +40,6 @@ public class Animal {
             case OTHER -> null;
         };
     }
-
 
     boolean isAt(Vector2d position) {
         if (position.equals(this.position)) {
@@ -50,21 +59,18 @@ public class Animal {
     public void move(MoveDirection direction){
         Vector2d newVector = new Vector2d(0,0);
         switch (direction) {
-            case RIGHT -> {
-                this.orientation = this.orientation.next();
-                return;
-            }
-            case LEFT -> {
-                this.orientation = this.orientation.previous();
-                return;
-            }
+            case RIGHT -> this.orientation = this.orientation.next();
+            case LEFT -> this.orientation = this.orientation.previous();
             case FORWARD -> newVector = this.position.add(this.orientation.toUnitVector());
             case BACKWARD -> newVector = this.position.subtract(this.orientation.toUnitVector());
             case OTHER -> newVector = this.position;
         }
+
         if(map.canMoveTo(newVector)) {
+            System.out.println(this.position + "--->" + newVector);
             this.position = newVector;
+            positionChanged(this.position, newVector);
         }
-//        System.out.println(map);
+        System.out.println(map);
     }
 }
