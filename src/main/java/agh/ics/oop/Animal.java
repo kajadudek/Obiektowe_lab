@@ -44,7 +44,7 @@ public class Animal {
         this.observers.remove(observer);
     }
 
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+    public void positionUpdate(Vector2d oldPosition, Vector2d newPosition) {
         for(IPositionChangeObserver observe: observers){
             observe.positionChanged(oldPosition,newPosition);
         }
@@ -60,16 +60,16 @@ public class Animal {
 
     public void move(MoveDirection direction){
         Vector2d newVector = new Vector2d(-1,-1);
+
         switch (direction) {
             case RIGHT -> this.orientation = this.orientation.next();
             case LEFT -> this.orientation = this.orientation.previous();
             case FORWARD -> newVector = this.position.add(this.orientation.toUnitVector());
             case BACKWARD -> newVector = this.position.subtract(this.orientation.toUnitVector());
-            case OTHER -> newVector = this.position;
         }
 
         if(map.canMoveTo(newVector)) {
-            positionChanged(this.position, newVector);
+            positionUpdate(this.position, newVector);
             this.position = newVector;
         }
         System.out.println(map);

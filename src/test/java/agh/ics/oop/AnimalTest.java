@@ -8,6 +8,22 @@ class AnimalTest {
 
     IWorldMap map;
     Animal zwierze;
+    Animal zwierze2;
+
+    @Test
+    public void placeTest() {
+        //given
+        map = new RectangularMap(5,10);
+        zwierze = new Animal(map, new Vector2d(2, 2));
+        zwierze2 = new Animal(map, new Vector2d(2, 2));
+
+        //when
+        map.place(zwierze);
+
+        //then
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {map.place(zwierze2);});
+        assertEquals(exception.getMessage(), zwierze2.getPosition().toString() + " is occupied");
+    }
 
     @Test
     public void isAtTest() {

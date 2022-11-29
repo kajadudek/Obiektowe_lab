@@ -11,13 +11,7 @@ public class RectangularMap extends AbstractWorldMap {
         this.width = width;
         this.height = height;
     }
-//    @Override
-//    public String toString(){
-//        Vector2d start = new Vector2d(0,0);
-//        Vector2d end = new Vector2d(width +1,height+1);
-//        MapVisualizer mapVisualizer = new MapVisualizer(this);
-//        return mapVisualizer.draw(start, end);
-//    }
+
     public int getWidth() {
         return this.width;
     }
@@ -35,5 +29,10 @@ public class RectangularMap extends AbstractWorldMap {
         Vector2d end = new Vector2d(width, height);
 
         return !isOccupied(position) && end.precedes(position) && position.precedes(start);
+//        if (!isOccupied(position) && end.precedes(position) && position.precedes(start)){
+//            return true;
+//        }else {
+//            throw new IllegalArgumentException("You can't move to: " + position.toString());
+//        }
     }
 }

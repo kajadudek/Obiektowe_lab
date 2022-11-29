@@ -5,7 +5,7 @@ import static java.lang.Math.*;
 public class GrassField extends AbstractWorldMap {
 
     public final int grassFields;
-    GrassField(int initialGrassFields) {
+    public GrassField(int initialGrassFields) {
         this.grassFields = initialGrassFields;
         randomGrassFields(grassFields);
     }
@@ -21,10 +21,12 @@ public class GrassField extends AbstractWorldMap {
                 x = (int) (Math.random() * maxi)+1;
                 y = (int) (Math.random() * maxi)+1;
             }
-            grasses.add(new Grass(new Vector2d(x, y)));
+
+            Vector2d vector = new Vector2d(x,y);
+            grasses.put(vector, new Grass(vector));
+            this.mapBoundary.add(vector);
         }
     }
-
 
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -32,13 +34,11 @@ public class GrassField extends AbstractWorldMap {
             return false;
         }
         if (position.precedes(new Vector2d(0, 0))) {
-
             if (isOccupied(position)) {
-                for (int i = 0; i < grasses.size(); i++) {
-                    if (grasses.get(i).getPosition().equals(position)) {
-                        grasses.remove(grasses.get(i));
-                        randomGrassFields(1);
-                    }
+                if(grasses.containsKey(position)){
+                    grasses.remove(position);
+                    mapBoundary.remove(position);
+                    randomGrassFields(1);
                 }
             }return true;
         }return false;
