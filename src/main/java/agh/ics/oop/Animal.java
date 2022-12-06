@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Animal {
+public class Animal implements IMapElement{
 
     private MapDirection orientation;
     private Vector2d position;
@@ -25,6 +25,17 @@ public class Animal {
             case SOUTH -> "S";
             case WEST -> "W";
             case EAST -> "E";
+            case OTHER -> null;
+        };
+    }
+
+    @Override
+    public String toImage() {
+        return switch (orientation) {
+            case NORTH -> "src/main/resources/up.png";
+            case SOUTH -> "src/main/resources/down.png";
+            case WEST -> "src/main/resources/left.png";
+            case EAST -> "src/main/resources/right.png";
             case OTHER -> null;
         };
     }
@@ -54,6 +65,11 @@ public class Animal {
         return position;
     }
 
+    @Override
+    public String toLabel() {
+        return this.getPosition().toString();
+    }
+
     public MapDirection getOrientation() {
         return orientation;
     }
@@ -72,6 +88,6 @@ public class Animal {
             positionUpdate(this.position, newVector);
             this.position = newVector;
         }
-        System.out.println(map);
+//        System.out.println(map);
     }
 }

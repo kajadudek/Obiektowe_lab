@@ -39,7 +39,6 @@ public class Vector2d {
         if (other.x > this.x) {
             tempX = other.x;
         }
-
         if (other.y > this.y) {
             tempY = other.y;
         }
